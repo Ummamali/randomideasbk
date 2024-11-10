@@ -2,6 +2,11 @@ const express = require("express");
 const config = require("./config");
 const { router: ideaRouter } = require("./resources/idea");
 const { router: usersRouter } = require("./resources/users");
+require("dotenv").config();
+const { connectDB } = require("./utils/db");
+
+// Connecting to mongo database
+connectDB();
 
 const app = express();
 

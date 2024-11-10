@@ -1,11 +1,13 @@
-const ResourceRouter = require("../utils/ResourceRouter");
-const JSONFileDatabase = require("../utils/JSONFileDatabase");
-const path = require("path");
+const MongoResource = require("../utils/MongoResource");
 
-const ideaRouter = new ResourceRouter();
-const database = new JSONFileDatabase(path.join(__dirname, "ideasDB.json"));
+const ideaResource = new MongoResource("Idea", {
+  content: { type: String, required: [true, "Please add some content"] },
+  authorId: { type: String },
+  category: { type: String },
+  date: { type: Date, default: Date.now },
+});
 
-ideaRouter.onCreate(database.createHandler.bind(database), {
+ideaResource.enableCreate({
   type: "object",
   properties: {
     authorId: { type: "string", minLength: 3 },
@@ -14,9 +16,9 @@ ideaRouter.onCreate(database.createHandler.bind(database), {
   },
   required: ["authorId", "content", "category"],
 });
-ideaRouter.onReadAll(database.readAllHandler.bind(database));
-ideaRouter.onReadOne(database.readOneHandler.bind(database));
-ideaRouter.onUpdate(database.updateHandler.bind(database), {
+ideaResource.enableReadAll();
+ideaResource.enableReadOne();
+ideaResource.enableUpdate({
   type: "object",
   properties: {
     content: { type: "string", minLength: 3 },
@@ -25,6 +27,6 @@ ideaRouter.onUpdate(database.updateHandler.bind(database), {
   required: [],
   additionalProperties: false,
 });
-ideaRouter.onDelete(database.deleteHandler.bind(database));
+ideaResource.enableDelete();
 
-module.exports = { router: ideaRouter.router };
+module.exports = { router: ideaResource.router };

@@ -1,11 +1,11 @@
-const ResourceRouter = require("../utils/ResourceRouter");
-const JSONFileDatabase = require("../utils/JSONFileDatabase");
-const path = require("path");
+const MongoResource = require("../utils/MongoResource");
 
-const usersRouter = new ResourceRouter();
-const database = new JSONFileDatabase(path.join(__dirname, "usersDB.json"));
+const usersResource = new MongoResource("Users", {
+  username: { type: String },
+  fullname: { type: String },
+});
 
-usersRouter.onReadAll(database.readAllHandler.bind(database));
-usersRouter.onReadOne(database.readOneHandler.bind(database));
+usersResource.enableReadAll();
+usersResource.enableReadOne();
 
-module.exports = { router: usersRouter.router };
+module.exports = { router: usersResource.router };

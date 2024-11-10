@@ -1,4 +1,8 @@
-const { testEndpoint } = require("./utils/endpointTestLibrary");
+const {
+  testEndpoint,
+  testReadAll,
+  testReadOne,
+} = require("./utils/endpointTestLibrary");
 
 testEndpoint(
   "http://127.0.0.1:5000/api/ideas",
@@ -13,12 +17,10 @@ testEndpoint(
   })
 );
 
-// Testing for the users resource
-// testEndpoint(
-//   "http://127.0.0.1:5000/api/users",
-//   () => ({
-//     id: "2024r",
-//     username: "usmanKhan",
-//   }),
-//   () => ({ username: "junaidKhan" })
-// );
+// // Testing for the users resource
+// testReadAll("http://127.0.0.1:5000/api/users");
+// testReadOne("http://127.0.0.1:5000/api/users", {
+//   _id: "672f6cf950895dd56bb19cc7",
+//   username: "usmanKhan",
+//   fullname: "Usman Khan",
+// });

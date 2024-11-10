@@ -1,5 +1,14 @@
 const lodash = require("lodash");
 
+function entryCompare(obj1, obj2) {
+  for (const [k, v] of Object.entries(obj1)) {
+    if (obj2[k] !== v) {
+      return false;
+    }
+  }
+  return true;
+}
+
 function defaultDummyResourceGetter() {
   return {
     id: "76dget543fdre4357d9je",
@@ -39,10 +48,12 @@ async function testCreate(
     const resObj = await res.json();
     if (resObj.created) {
       console.log("-- POST returned ", resObj);
-      const getRes = await fetch(`${endpoint}/${item["id"]}`);
+      const getRes = await fetch(`${endpoint}/${resObj.createdId}`);
       const getResObj = await getRes.json();
-      if (lodash.isEqual(item, getResObj)) {
+
+      if (entryCompare(item, getResObj)) {
         console.log("\x1b[32m-- Dummy Item has been created!\x1b[0m");
+        return getResObj;
       }
     }
   }
@@ -58,34 +69,24 @@ async function testReadAll(endpoint) {
   }
 }
 
-async function testReadOne(
-  endpoint,
-  getDummyResource = defaultDummyResourceGetter
-) {
-  const item = getDummyResource();
+async function testReadOne(endpoint, getResObj) {
   console.log("\nTesting Read One");
-  const res = await fetch(endpoint + "/" + item.id);
+  const res = await fetch(endpoint + "/" + getResObj["_id"]);
   if (res.ok) {
     console.log("-- GET returned status 200");
     const resObj = await res.json();
-    if (lodash.isEqual(resObj, item)) {
+    if (lodash.isEqual(resObj, getResObj)) {
       console.log(
-        `\x1b[32m-- Created item of id ${resObj.id} is returned\x1b[0m`
+        `\x1b[32m-- Already Created item of id ${resObj._id} is returned\x1b[0m`
       );
     }
   }
 }
 
-async function testUpdate(
-  endpoint,
-  getDummyResource = defaultDummyResourceGetter,
-  getDummyDiffObj = defaultDummyDiffGetter
-) {
-  const item = getDummyResource();
-  const itemDiff = getDummyDiffObj();
+async function testUpdate(endpoint, item, itemDiff) {
   const updatedObject = { ...item, ...itemDiff };
   console.log("\nTesting Update");
-  const res = await fetch(`${endpoint}/${item.id}`, {
+  const res = await fetch(`${endpoint}/${item._id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -96,8 +97,8 @@ async function testUpdate(
     console.log("-- PUT returned status " + res.status);
     const resObj = await res.json();
     if (resObj.updated) {
-      console.log(`-- PUT returned updated: true`);
-      const getRes = await fetch(endpoint + "/" + item.id);
+      console.log(`-- PUT returned `, resObj);
+      const getRes = await fetch(endpoint + "/" + item._id);
       const getResObj = await getRes.json();
       if (lodash.isEqual(getResObj, updatedObject)) {
         console.log(`\x1b[32m-- Resource item has been updated\x1b[0m`);
@@ -105,21 +106,17 @@ async function testUpdate(
     }
   }
 }
-async function testDelete(
-  endpoint,
-  getDummyResource = defaultDummyResourceGetter
-) {
-  const item = getDummyResource();
+async function testDelete(endpoint, createdId) {
   console.log("\nTesting Delete");
-  const res = await fetch(`${endpoint}/${item.id}`, {
+  const res = await fetch(`${endpoint}/${createdId}`, {
     method: "DELETE",
   });
   if (res.ok) {
     console.log("-- DELETE returned status " + res.status);
     const resObj = await res.json();
-    if (resObj.deleted && resObj.deletedId === item.id) {
-      console.log(`-- DELETE returned deleted: true and object id`);
-      const getRes = await fetch(endpoint + "/" + item.id);
+    if (resObj.deleted && resObj.deletedId === createdId) {
+      console.log(`-- DELETE returned `, resObj);
+      const getRes = await fetch(endpoint + "/" + createdId);
       if (getRes.status === 404) {
         console.log(`\x1b[32m-- Resource item has been deleted\x1b[0m`);
       }
@@ -132,11 +129,18 @@ async function testEndpoint(
   dummyResourceGetter = defaultDummyResourceGetter,
   getDummyDiffObj = defaultDummyDiffGetter
 ) {
-  await testCreate(endpoint, dummyResourceGetter);
+  const getResObj = await testCreate(endpoint, dummyResourceGetter);
   await testReadAll(endpoint);
-  await testReadOne(endpoint, dummyResourceGetter);
-  await testUpdate(endpoint, dummyResourceGetter, getDummyDiffObj);
-  await testDelete(endpoint, dummyResourceGetter);
+  await testReadOne(endpoint, getResObj);
+  await testUpdate(endpoint, getResObj, getDummyDiffObj());
+  await testDelete(endpoint, getResObj._id);
 }
 
-module.exports = { testEndpoint };
+module.exports = {
+  testEndpoint,
+  testCreate,
+  testReadAll,
+  testReadOne,
+  testUpdate,
+  testDelete,
+};
