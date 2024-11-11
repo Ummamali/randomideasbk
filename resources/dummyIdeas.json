@@ -1,0 +1,92 @@
+[
+  {
+    "content": "The impact of artificial intelligence on modern healthcare.",
+    "authorId": "672f6cf950895dd56bb19cc7",
+    "category": "Healthcare",
+    "date": {
+      "$date": "2024-11-09T08:10:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "content": "Latest trends in renewable energy technology.",
+    "authorId": "672f6cf950895dd56bb19cc7",
+    "category": "Energy",
+    "date": {
+      "$date": "2024-11-10T09:20:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "content": "Exploring blockchain applications in logistics.",
+    "authorId": "672f6cf950895dd56bb19cc7",
+    "category": "Logistics",
+    "date": {
+      "$date": "2024-11-11T10:30:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "content": "How big data is transforming marketing strategies.",
+    "authorId": "672f6cf950895dd56bb19cc7",
+    "category": "Marketing",
+    "date": {
+      "$date": "2024-11-12T11:40:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "content": "The role of IoT in smart city development.",
+    "authorId": "672f6cf950895dd56bb19cc7",
+    "category": "Smart Cities",
+    "date": {
+      "$date": "2024-11-13T12:50:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "content": "Understanding the basics of quantum computing.",
+    "authorId": "672f6cf950895dd56bb19cc7",
+    "category": "Quantum Computing",
+    "date": {
+      "$date": "2024-11-14T13:00:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "content": "How e-commerce platforms are utilizing AI for personalization.",
+    "authorId": "672f6cf950895dd56bb19cc7",
+    "category": "E-commerce",
+    "date": {
+      "$date": "2024-11-15T14:10:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "content": "Advancements in wearable technology for fitness tracking.",
+    "authorId": "672f6cf950895dd56bb19cc7",
+    "category": "Fitness",
+    "date": {
+      "$date": "2024-11-16T15:20:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "content": "Exploring cybersecurity challenges in cloud computing.",
+    "authorId": "672f6cf950895dd56bb19cc7",
+    "category": "Cybersecurity",
+    "date": {
+      "$date": "2024-11-17T16:30:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "content": "The future of autonomous vehicles and transportation.",
+    "authorId": "672f6cf950895dd56bb19cc7",
+    "category": "Transportation",
+    "date": {
+      "$date": "2024-11-18T17:40:00.000Z"
+    },
+    "__v": 0
+  }
+]

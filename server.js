@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const config = require("./config");
 const { router: ideaRouter } = require("./resources/idea");
 const { router: usersRouter } = require("./resources/users");
@@ -11,6 +12,7 @@ connectDB();
 const app = express();
 
 // middlewares
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
