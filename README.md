@@ -17,9 +17,6 @@ A backend API designed for managing and sharing random ideas with CRUD operation
 
 ## ⚙️ REST API Information  
 
-### **Base URL**:  
-`http://your-api-domain/api`  
-
 ### **Endpoints**  
 
 #### 1️⃣ **Ideas Resource**  
